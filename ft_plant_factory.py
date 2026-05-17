@@ -21,19 +21,16 @@ class Plant:
         self.d_age += days
 
 
-def ft_plant_growth() -> None:
-    plant = Plant("rose", 25, 30)
-    days: int = 1
-    print("=== Garden Plant Growth ===")
-    plant.show()
-    while days <= 7:
-        print(f"=== Day {days} ===")
-        plant.age(1)
-        plant.grow(1)
-        plant.show()
-        days += 1
-    print(f"Growth this week: {round(plant.growth, 1)}cm")
+def ft_plant_factory() -> None:
+    plants = [Plant("rose", 25, 30), Plant("oak", 200, 365),
+              Plant("cactus", 5, 90), Plant("sunflower", 80, 45),
+              Plant("fern", 15, 120)]
+
+    print("=== Plant Factory Output ===")
+    for i in range(0, 5):
+        print("Created: ", end=' ')
+        plants[i].show()
 
 
 if __name__ == "__main__":
-    ft_plant_growth()
+    ft_plant_factory()
