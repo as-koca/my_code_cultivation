@@ -10,12 +10,18 @@ class Plant:
         self._d_age: int = age
         self._growth: float = 0
 
-    class Data:
+    class Stats:
         age: int = 0
         grow: int = 0
         show: int = 0
         produce_shade: int = 0
-    data = Data()
+
+    data = Stats()
+
+    def show_data(self) -> None:
+        print(f"[statistics for {self._name}]")
+        print(f"Stats: {self.data.grow} grow, {self.data.age}", end=' ')
+        print(f"age, {self.data.show} show")
 
     def is_valid(self, p: float, var_name: str) -> bool:
         if (p < 0):
@@ -62,11 +68,6 @@ class Plant:
         self._d_age += days
         self.data.age += 1
 
-    def show_data(self) -> None:
-        print(f"[statistics for {self._name}]")
-        print(f"Stats: {self.data.grow} grow, {self.data.age}", end=' ')
-        print(f"age, {self.data.show} show")
-
     def show(self) -> None:
         print(f"{self._name}: {round(self._height, 1)}cm,", end=' ')
         print(f"{self._d_age} days old")
@@ -90,13 +91,7 @@ class Tree(Plant):
             trunk_diameter = 0
         self._trunk_diameter: float = trunk_diameter
         self._shade: float = 0
-
-    class Data:
-        age: int = 0
-        grow: int = 0
-        show: int = 0
-        produce_shade: int = 0
-    data = Data()
+        data = super().Stats()
 
     def produce_shade(self) -> None:
         print(f"Tree {self._name} now produces a shade of", end=' ')
@@ -105,7 +100,7 @@ class Tree(Plant):
         self.data.produce_shade += 1
 
     def show(self) -> None:
-        Plant.show(self)
+        super().show()
         print(f"Trunk diameter: {round(self._trunk_diameter, 1)}cm")
         self.show_data()
 
@@ -116,18 +111,11 @@ class Flower(Plant):
         self._color = color
         self._bloom = f"{self._name} has not bloomed yet"
 
-    class Data:
-        age: int = 0
-        grow: int = 0
-        show: int = 0
-        produce_shade: int = 0
-    data = Data()
-
     def bloom(self) -> None:
         self._bloom = f"{self._name} is blooming beautifully!"
 
     def show(self) -> None:
-        Plant.show(self)
+        super().show()
         print(f"Color: {self._color}")
         print(self._bloom)
         self.show_data()
@@ -138,15 +126,8 @@ class Seed(Flower):
         super().__init__(name, height, age, color)
         self._seeds: int = 0
 
-    class Data:
-        age: int = 0
-        grow: int = 0
-        show: int = 0
-        produce_shade: int = 0
-    data = Data()
-
     def show(self) -> None:
-        Flower.show(self)
+        super().show()
         print(f"Seeds: {self._seeds}")
 
     def bloom(self) -> None:
@@ -160,13 +141,6 @@ class Vegetable(Plant):
         self._nut_val = nut_val
         self._harvest_season = harvest_season.capitalize()
 
-    class Data:
-        age: int = 0
-        grow: int = 0
-        show: int = 0
-        produce_shade: int = 0
-    data = Data()
-
     def grow(self, days: int) -> None:
         super().grow(days)
         self._nut_val += days / 2
@@ -176,7 +150,7 @@ class Vegetable(Plant):
         self._nut_val += days / 2
 
     def show(self) -> None:
-        Plant.show(self)
+        super().show()
         print(f"Harvest season: {self._harvest_season}")
         print(f"Nutritional value: {round(self._nut_val, 1)}")
         self.show_data()

@@ -71,7 +71,7 @@ class Tree(Plant):
         print(f"{round(self._trunk_diameter, 1)}cm wide.")
 
     def show(self) -> None:
-        Plant.show(self)
+        super().show()
         print(f"Trunk diameter: {round(self._trunk_diameter, 1)}cm")
 
 
@@ -85,7 +85,7 @@ class Flower(Plant):
         self._bloom = f"{self._name} is blooming beautifully!"
 
     def show(self) -> None:
-        Plant.show(self)
+        super().show()
         print(f"Color: {self._color}")
         print(self._bloom)
 
@@ -105,7 +105,7 @@ class Vegetable(Plant):
         self._nut_val += days / 2
 
     def show(self) -> None:
-        Plant.show(self)
+        super().show()
         print(f"Harvest season: {self._harvest_season}")
         print(f"Nutritional value: {round(self._nut_val, 1)}")
 

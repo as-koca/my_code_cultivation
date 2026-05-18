@@ -73,8 +73,9 @@ def ft_garden_security() -> None:
     print("\nCurrent state:", end=' ')
     plant.show()
     print("")
-    plant.get_height()
-    plant.get_age()
+    height = plant.get_height()
+    age = plant.get_age()
+    print(f"age: {age}, height: {height}")
 
 
 if __name__ == "__main__":
