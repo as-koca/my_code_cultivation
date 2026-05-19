@@ -9,19 +9,19 @@ class Plant:
         self._height: float = height
         self._d_age: int = age
         self._growth: float = 0
+        self._data = self.Stats()
 
     class Stats:
-        age: int = 0
-        grow: int = 0
-        show: int = 0
-        produce_shade: int = 0
-
-    data = Stats()
+        def __init__(self) -> None:
+            self.age: int = 0
+            self.grow: int = 0
+            self.show: int = 0
+            self.produce_shade: int = 0
 
     def show_data(self) -> None:
         print(f"[statistics for {self._name}]")
-        print(f"Stats: {self.data.grow} grow, {self.data.age}", end=' ')
-        print(f"age, {self.data.show} show")
+        print(f"Stats: {self._data.grow} grow, {self._data.age}", end=' ')
+        print(f"age, {self._data.show} show")
 
     def is_valid(self, p: float, var_name: str) -> bool:
         if (p < 0):
@@ -60,18 +60,18 @@ class Plant:
         else:
             self._height += 0.4 * days
             self._growth += 0.4 * days
-        self.data.grow += 1
+        self._data.grow += 1
 
     def age(self, days: int) -> None:
         if (self.is_valid(days, "days") is False):
             return
         self._d_age += days
-        self.data.age += 1
+        self._data.age += 1
 
     def show(self) -> None:
         print(f"{self._name}: {round(self._height, 1)}cm,", end=' ')
         print(f"{self._d_age} days old")
-        self.data.show += 1
+        self._data.show += 1
 
     @staticmethod
     def check_year_old(days: int) -> bool:
@@ -84,32 +84,41 @@ class Plant:
         return cls("Unkown plant", 0, 0)
 
 
+def show_data(cls) -> None:
+    cls.show_data()
+
+
 class Tree(Plant):
     def __init__(self, name, height, age, trunk_diameter: float) -> None:
-        super().__init__(name=name, height=height, age=age)
+        super().__init__(name, height, age)
         if (self.is_valid(trunk_diameter, "trunk_diameter") is False):
             trunk_diameter = 0
         self._trunk_diameter: float = trunk_diameter
         self._shade: float = 0
-        data = super().Stats()
+        self._data = super().Stats()
 
     def produce_shade(self) -> None:
         print(f"Tree {self._name} now produces a shade of", end=' ')
         print(f"{round(self._height, 1)}cm long and", end=' ')
         print(f"{round(self._trunk_diameter, 1)}cm wide.")
-        self.data.produce_shade += 1
+        self._data.produce_shade += 1
 
     def show(self) -> None:
         super().show()
         print(f"Trunk diameter: {round(self._trunk_diameter, 1)}cm")
         self.show_data()
 
+    def show_data(self) -> None:
+        super().show_data()
+        print(f"{self._data.produce_shade} shade")
+
 
 class Flower(Plant):
     def __init__(self, name, height, age, color) -> None:
-        super().__init__(name=name, height=height, age=age)
+        super().__init__(name, height, age)
         self._color = color
         self._bloom = f"{self._name} has not bloomed yet"
+        self._data = super().Stats()
 
     def bloom(self) -> None:
         self._bloom = f"{self._name} is blooming beautifully!"
@@ -125,6 +134,7 @@ class Seed(Flower):
     def __init__(self, name, height, age, color) -> None:
         super().__init__(name, height, age, color)
         self._seeds: int = 0
+        self._data = super().Stats()
 
     def show(self) -> None:
         super().show()
@@ -137,9 +147,10 @@ class Seed(Flower):
 
 class Vegetable(Plant):
     def __init__(self, name, height, age, nut_val, harvest_season) -> None:
-        super().__init__(name=name, height=height, age=age)
+        super().__init__(name, height, age)
         self._nut_val = nut_val
         self._harvest_season = harvest_season.capitalize()
+        self._data = super().Stats()
 
     def grow(self, days: int) -> None:
         super().grow(days)
@@ -154,7 +165,6 @@ class Vegetable(Plant):
         print(f"Harvest season: {self._harvest_season}")
         print(f"Nutritional value: {round(self._nut_val, 1)}")
         self.show_data()
-        print(f"{self.data.produce_shade} shade")
 
 
 def ft_garden_analytics() -> None:
